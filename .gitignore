@@ -1,0 +1,15 @@
+# Sensitive files
+*.key
+*.pem
+*kubeconfig*
+secrets/
+
+# Temporary files
+*.swp
+*.swo
+*~
+.DS_Store
+
+# IDE
+.vscode/
+.idea/

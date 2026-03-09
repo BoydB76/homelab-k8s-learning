@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: frontend
+      tier: web
+  template:
+    metadata:
+      labels:
+        app: frontend
+        tier: web
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: config
+          mountPath: /etc/nginx/conf.d
+        - name: html
+          mountPath: /usr/share/nginx/html
+      initContainers:
+      - name: setup
+        image: busybox
+        command:
+        - sh
+        - -c
+        - |
+          # Create HTML
+          cat > /html/index.html <<'HTML'
+          <!DOCTYPE html>
+          <html>
+          <head><title>Boydb Frontend Demo</title></head>
+          <body>
+            <h1>Frontend Application</h1>
+            <p>Frontend pod communicating with backend service</p>
+            <button onclick="callBackend()">Call Backend API</button>
+            <div id="result" style="margin-top: 20px; padding: 10px; background: #f0f0f0;"></div>
+            <script>
+              async function callBackend() {
+                try {
+                  const response = await fetch('/api');
+                  const text = await response.text();
+                  document.getElementById('result').innerHTML = '<strong>Backend Response:</strong><br>' + text;
+                } catch(err) {
+                  document.getElementById('result').innerHTML = '<strong>Error:</strong> ' + err;
+                }
+              }
+            </script>
+          </body>
+          </html>
+          HTML
+          
+          # Create nginx config
+          cat > /config/default.conf <<'CONF'
+          server {
+            listen 80;
+            
+            location / {
+              root /usr/share/nginx/html;
+              index index.html;
+            }
+            
+            location /api {
+              proxy_pass http://backend-api:8080;
+            }
+          }
+          CONF
+        volumeMounts:
+        - name: html
+          mountPath: /html
+        - name: config
+          mountPath: /config
+      volumes:
+      - name: html
+        emptyDir: {}
+      - name: config
+        emptyDir: {}

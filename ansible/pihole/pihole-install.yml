@@ -1,0 +1,76 @@
+---
+- name: Install and Configure Pi-hole
+  hosts: pihole
+  become: yes
+  
+  vars:
+    pihole_webpassword: "ice76!Cube!!"  # Change this!
+    pihole_dns1: "1.1.1.1"              # Cloudflare
+    pihole_dns2: "1.0.0.1"              # Cloudflare backup
+    pihole_interface: "eth0"
+    pihole_ipv4: "192.168.1.149/24"
+    
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+    
+    - name: Install required packages
+      apt:
+        name:
+          - curl
+          - git
+          - ca-certificates
+        state: present
+    
+    - name: Download Pi-hole installer
+      get_url:
+        url: https://install.pi-hole.net
+        dest: /tmp/pihole-install.sh
+        mode: '0755'
+    
+    - name: Create /etc/pihole directory
+      file:
+        path: /etc/pihole
+        state: directory
+        mode: '0755'
+    
+    - name: Create Pi-hole setup vars file
+      copy:
+        dest: /etc/pihole/setupVars.conf
+        content: |
+          PIHOLE_INTERFACE={{ pihole_interface }}
+          IPV4_ADDRESS={{ pihole_ipv4 }}
+          QUERY_LOGGING=true
+          INSTALL_WEB_SERVER=true
+          INSTALL_WEB_INTERFACE=true
+          LIGHTTPD_ENABLED=true
+          CACHE_SIZE=10000
+          DNS_FQDN_REQUIRED=true
+          DNS_BOGUS_PRIV=true
+          DNSMASQ_LISTENING=single
+          PIHOLE_DNS_1={{ pihole_dns1 }}
+          PIHOLE_DNS_2={{ pihole_dns2 }}
+        mode: '0644'
+      
+    - name: Run Pi-hole installer (unattended)
+      command: bash /tmp/pihole-install.sh --unattended
+      args:
+        creates: /usr/local/bin/pihole
+      register: pihole_install
+      
+    - name: Set Pi-hole web password
+      command: pihole -a -p "{{ pihole_webpassword }}"
+      no_log: true
+      
+    - name: Display Pi-hole info
+      debug:
+        msg:
+          - "Pi-hole installation complete!"
+          - "Web interface: http://192.168.1.149/admin"
+          - "Password: {{ pihole_webpassword }}"
+          - ""
+          - "Next steps:"
+          - "1. Access web interface and verify it's working"
+          - "2. Configure your router to use 192.168.1.149 as DNS"
