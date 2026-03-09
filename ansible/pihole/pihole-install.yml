@@ -4,7 +4,7 @@
   become: yes
   
   vars:
-    pihole_webpassword: "ice76!Cube!!"  # Change this!
+    pihole_webpassword: "YOURPASSWORD"  # Change this!
     pihole_dns1: "1.1.1.1"              # Cloudflare
     pihole_dns2: "1.0.0.1"              # Cloudflare backup
     pihole_interface: "eth0"
