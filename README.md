@@ -41,6 +41,12 @@ Production-grade Kubernetes homelab built from scratch for learning DevOps/Platf
 - ✅ DNS integration with Pi-hole
 - ✅ Production-grade traffic management
 
+### Phase 6: Configuration Management
+- ✅ ConfigMaps for application configuration
+- ✅ Secrets for sensitive data
+- ✅ Environment variables and volume mounts
+- ✅ Live config updates without container rebuilds
+
 ## Skills Demonstrated
 
 **Kubernetes:**
@@ -49,6 +55,7 @@ Production-grade Kubernetes homelab built from scratch for learning DevOps/Platf
 - Declarative infrastructure management
 - Service discovery and networking
 - Ingress controllers and routing
+- ConfigMaps and Secrets management
 
 **Infrastructure as Code:**
 - Ansible playbooks for automation
@@ -59,6 +66,8 @@ Production-grade Kubernetes homelab built from scratch for learning DevOps/Platf
 **Production Operations:**
 - Resource optimization
 - High availability patterns
+- Configuration externalization
+- Security best practices (secrets management)
 - Monitoring and debugging
 - Problem-solving in production-like environments
 
@@ -68,11 +77,11 @@ Production-grade Kubernetes homelab built from scratch for learning DevOps/Platf
 ├── ansible/
 │   ├── pihole/          # Pi-hole deployment automation
 │   └── k3s/             # k3s cluster provisioning
-├── kubernetes/
-│   ├── deployments/     # Application deployments
-│   ├── services/        # Service definitions
-│   └── ingress/         # Ingress resources
-└── README.md
+└── kubernetes/
+    ├── deployments/     # Application deployments
+    ├── services/        # Service definitions
+    ├── ingress/         # Ingress resources
+    └── configmaps-secrets/  # Configuration management
 ```
 
 ## Tech Stack
@@ -87,11 +96,11 @@ Production-grade Kubernetes homelab built from scratch for learning DevOps/Platf
 
 ## Next Steps
 
-- [ ] ConfigMaps and Secrets management
 - [ ] Persistent storage with StatefulSets
 - [ ] Monitoring stack (Prometheus + Grafana)
 - [ ] CI/CD pipeline (ArgoCD or Flux)
 - [ ] Production application deployment
+- [ ] Terraform for infrastructure provisioning
 
 ## Learning Resources
 
