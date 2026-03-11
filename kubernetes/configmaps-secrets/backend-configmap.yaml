@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-config
+  namespace: default
+data:
+  GREETING_NAME: "Boydb"
+  GREETING_MESSAGE: "ConfigMap updated! No container rebuild needed! 🚀"
+  API_VERSION: "v2.0"
