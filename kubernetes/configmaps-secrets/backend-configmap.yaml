@@ -5,5 +5,5 @@ metadata:
   namespace: default
 data:
   GREETING_NAME: "Boydb"
-  GREETING_MESSAGE: "ConfigMap updated! No container rebuild needed! 🚀"
+  GREETING_MESSAGE: "ConfigMap updated! No container rebuild needed! Get ready for Phase 7🚀"
   API_VERSION: "v2.0"
