@@ -8,6 +8,7 @@ Production-grade Kubernetes homelab built from scratch for learning DevOps/Platf
 - **Cluster:** 3-node k3s (1 control plane + 2 workers) in LXC containers
 - **Networking:** Pi-hole for DNS and ad-blocking
 - **Ingress:** Traefik for host-based routing
+- **Storage:** Local-path provisioner for persistent volumes
 - **IaC:** Ansible for automation
 
 ## What I've Built
@@ -47,6 +48,13 @@ Production-grade Kubernetes homelab built from scratch for learning DevOps/Platf
 - ✅ Environment variables and volume mounts
 - ✅ Live config updates without container rebuilds
 
+### Phase 7: Persistent Storage & StatefulSets
+- ✅ PersistentVolumes and PersistentVolumeClaims
+- ✅ StatefulSets for stateful applications
+- ✅ PostgreSQL database with persistent data
+- ✅ Data persistence across pod restarts
+- ✅ Production database deployment patterns
+
 ## Skills Demonstrated
 
 **Kubernetes:**
@@ -56,6 +64,8 @@ Production-grade Kubernetes homelab built from scratch for learning DevOps/Platf
 - Service discovery and networking
 - Ingress controllers and routing
 - ConfigMaps and Secrets management
+- Persistent storage and StatefulSets
+- Database deployment and management
 
 **Infrastructure as Code:**
 - Ansible playbooks for automation
@@ -68,6 +78,8 @@ Production-grade Kubernetes homelab built from scratch for learning DevOps/Platf
 - High availability patterns
 - Configuration externalization
 - Security best practices (secrets management)
+- Stateful application management
+- Data persistence strategies
 - Monitoring and debugging
 - Problem-solving in production-like environments
 
@@ -81,7 +93,8 @@ Production-grade Kubernetes homelab built from scratch for learning DevOps/Platf
     ├── deployments/     # Application deployments
     ├── services/        # Service definitions
     ├── ingress/         # Ingress resources
-    └── configmaps-secrets/  # Configuration management
+    ├── configmaps-secrets/  # Configuration management
+    └── persistent-storage/  # StatefulSets and persistent volumes
 ```
 
 ## Tech Stack
@@ -92,15 +105,17 @@ Production-grade Kubernetes homelab built from scratch for learning DevOps/Platf
 - **Service Mesh:** Traefik
 - **DNS:** Pi-hole, CoreDNS
 - **Package Management:** Helm
+- **Storage:** Local-path provisioner
+- **Database:** PostgreSQL (StatefulSet)
 - **Version Control:** Git
 
 ## Next Steps
 
-- [ ] Persistent storage with StatefulSets
 - [ ] Monitoring stack (Prometheus + Grafana)
 - [ ] CI/CD pipeline (ArgoCD or Flux)
 - [ ] Production application deployment
 - [ ] Terraform for infrastructure provisioning
+- [ ] Advanced networking (NetworkPolicies)
 
 ## Learning Resources
 
