@@ -9,6 +9,7 @@ Production-grade Kubernetes homelab built from scratch for learning DevOps/Platf
 - **Networking:** Pi-hole for DNS and ad-blocking
 - **Ingress:** Traefik for host-based routing
 - **Storage:** Local-path provisioner for persistent volumes
+- **Monitoring:** Prometheus + Grafana for observability
 - **IaC:** Ansible for automation
 
 ## What I've Built
@@ -55,6 +56,16 @@ Production-grade Kubernetes homelab built from scratch for learning DevOps/Platf
 - ✅ Data persistence across pod restarts
 - ✅ Production database deployment patterns
 
+### Phase 8: Monitoring & Observability
+- ✅ Prometheus metrics collection and storage
+- ✅ Grafana dashboards and visualization
+- ✅ Pre-built Kubernetes dashboards
+- ✅ PostgreSQL monitoring with postgres-exporter
+- ✅ Custom metrics and queries (PromQL)
+- ✅ ServiceMonitor configuration
+- ✅ Real-time resource monitoring
+- ✅ Alert rules for cluster health
+
 ## Skills Demonstrated
 
 **Kubernetes:**
@@ -66,12 +77,22 @@ Production-grade Kubernetes homelab built from scratch for learning DevOps/Platf
 - ConfigMaps and Secrets management
 - Persistent storage and StatefulSets
 - Database deployment and management
+- Production monitoring and observability
 
 **Infrastructure as Code:**
 - Ansible playbooks for automation
 - Git version control for infrastructure
 - Declarative YAML manifests
 - GitOps principles
+- Helm chart deployments
+
+**Monitoring & Observability:**
+- Prometheus metric collection
+- Grafana dashboard creation
+- PromQL query language
+- ServiceMonitor configuration
+- Database monitoring
+- Resource tracking and alerting
 
 **Production Operations:**
 - Resource optimization
@@ -80,7 +101,9 @@ Production-grade Kubernetes homelab built from scratch for learning DevOps/Platf
 - Security best practices (secrets management)
 - Stateful application management
 - Data persistence strategies
-- Monitoring and debugging
+- Performance monitoring
+- Capacity planning
+- Troubleshooting and debugging
 - Problem-solving in production-like environments
 
 ## Repository Structure
@@ -94,7 +117,8 @@ Production-grade Kubernetes homelab built from scratch for learning DevOps/Platf
     ├── services/        # Service definitions
     ├── ingress/         # Ingress resources
     ├── configmaps-secrets/  # Configuration management
-    └── persistent-storage/  # StatefulSets and persistent volumes
+    ├── persistent-storage/  # StatefulSets and persistent volumes
+    └── monitoring/      # Prometheus + Grafana stack
 ```
 
 ## Tech Stack
@@ -107,14 +131,42 @@ Production-grade Kubernetes homelab built from scratch for learning DevOps/Platf
 - **Package Management:** Helm
 - **Storage:** Local-path provisioner
 - **Database:** PostgreSQL (StatefulSet)
+- **Monitoring:** Prometheus, Grafana
+- **Metrics:** Node Exporter, kube-state-metrics, postgres-exporter
 - **Version Control:** Git
+
+## Access Points
+
+- **Grafana:** http://grafana.local:30300 (admin/admin123)
+- **Prometheus:** http://prometheus.local:30901
+- **Traefik Dashboard:** http://traefik.local:30090/dashboard/
+- **Frontend App:** http://frontend.local:30090
+- **Nginx Demo:** http://nginx.local:30090
+- **Pi-hole:** http://192.168.1.149/admin
+
+## Monitoring Dashboards
+
+**Pre-built Kubernetes Dashboards:**
+- Kubernetes / Compute Resources / Cluster - Overall cluster health
+- Kubernetes / Compute Resources / Namespace (Pods) - Per-namespace metrics
+- Kubernetes / Compute Resources / Pod - Individual pod metrics
+- Node Exporter / Nodes - Host-level system metrics
+
+**Custom Metrics Available:**
+- Container CPU and memory usage
+- Network I/O rates
+- Pod counts and status
+- PostgreSQL connections and transactions
+- Database size and performance
+- Node resource utilization
 
 ## Next Steps
 
-- [ ] Monitoring stack (Prometheus + Grafana)
 - [ ] CI/CD pipeline (ArgoCD or Flux)
-- [ ] Production application deployment
+- [ ] Advanced alerting with Alertmanager
 - [ ] Terraform for infrastructure provisioning
+- [ ] Additional application monitoring
+- [ ] Log aggregation (Loki)
 - [ ] Advanced networking (NetworkPolicies)
 
 ## Learning Resources
