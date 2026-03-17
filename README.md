@@ -10,6 +10,7 @@ Production-grade Kubernetes homelab built from scratch for learning DevOps/Platf
 - **Ingress:** Traefik for host-based routing
 - **Storage:** Local-path provisioner for persistent volumes
 - **Monitoring:** Prometheus + Grafana for observability
+- **GitOps:** ArgoCD + Gitea for automated deployments
 - **IaC:** Ansible for automation
 
 ## What I've Built
@@ -66,6 +67,16 @@ Production-grade Kubernetes homelab built from scratch for learning DevOps/Platf
 - ✅ Real-time resource monitoring
 - ✅ Alert rules for cluster health
 
+### Phase 9: CI/CD & GitOps
+- ✅ Gitea Git server deployed in-cluster
+- ✅ ArgoCD GitOps controller
+- ✅ Automated deployments from Git
+- ✅ Git as single source of truth
+- ✅ Automatic sync and self-healing
+- ✅ Declarative application management
+- ✅ Audit trail via Git history
+- ✅ Zero-touch deployments (push to Git → auto-deploy)
+
 ## Skills Demonstrated
 
 **Kubernetes:**
@@ -78,13 +89,24 @@ Production-grade Kubernetes homelab built from scratch for learning DevOps/Platf
 - Persistent storage and StatefulSets
 - Database deployment and management
 - Production monitoring and observability
+- GitOps workflow automation
 
 **Infrastructure as Code:**
 - Ansible playbooks for automation
 - Git version control for infrastructure
 - Declarative YAML manifests
-- GitOps principles
+- GitOps principles (Git as source of truth)
 - Helm chart deployments
+- Automated drift detection and remediation
+
+**CI/CD & GitOps:**
+- ArgoCD application deployment
+- Automated synchronization from Git
+- Self-healing infrastructure
+- Configuration drift prevention
+- Rollback via Git revert
+- Multi-application orchestration
+- Repository-based deployment strategy
 
 **Monitoring & Observability:**
 - Prometheus metric collection
@@ -112,13 +134,18 @@ Production-grade Kubernetes homelab built from scratch for learning DevOps/Platf
 ├── ansible/
 │   ├── pihole/          # Pi-hole deployment automation
 │   └── k3s/             # k3s cluster provisioning
-└── kubernetes/
-    ├── deployments/     # Application deployments
-    ├── services/        # Service definitions
-    ├── ingress/         # Ingress resources
-    ├── configmaps-secrets/  # Configuration management
-    ├── persistent-storage/  # StatefulSets and persistent volumes
-    └── monitoring/      # Prometheus + Grafana stack
+├── kubernetes/
+│   ├── deployments/     # Application deployments
+│   ├── services/        # Service definitions
+│   ├── ingress/         # Ingress resources
+│   ├── configmaps-secrets/  # Configuration management
+│   ├── persistent-storage/  # StatefulSets and persistent volumes
+│   └── monitoring/      # Prometheus + Grafana stack
+└── gitops-example/
+    └── applications/    # GitOps-managed application manifests
+        ├── frontend/
+        ├── backend/
+        └── nginx/
 ```
 
 ## Tech Stack
@@ -133,16 +160,43 @@ Production-grade Kubernetes homelab built from scratch for learning DevOps/Platf
 - **Database:** PostgreSQL (StatefulSet)
 - **Monitoring:** Prometheus, Grafana
 - **Metrics:** Node Exporter, kube-state-metrics, postgres-exporter
+- **GitOps:** ArgoCD
+- **Git Server:** Gitea
 - **Version Control:** Git
 
 ## Access Points
 
+- **ArgoCD:** https://argocd.local:30801 (admin)
+- **Gitea:** http://gitea.local:30030 (gitea_admin)
 - **Grafana:** http://grafana.local:30300 (admin/admin123)
 - **Prometheus:** http://prometheus.local:30901
 - **Traefik Dashboard:** http://traefik.local:30090/dashboard/
 - **Frontend App:** http://frontend.local:30090
 - **Nginx Demo:** http://nginx.local:30090
 - **Pi-hole:** http://192.168.1.149/admin
+
+## GitOps Workflow
+
+All applications are now managed via GitOps:
+
+1. Make changes to YAML files in Git repository
+2. Commit and push to Gitea
+3. ArgoCD automatically detects changes
+4. ArgoCD syncs cluster state to match Git
+5. Applications update with zero manual intervention
+
+**Deployed applications via ArgoCD:**
+- backend-api
+- frontend-web
+- nginx-webapp
+
+**Benefits:**
+- Git is single source of truth
+- Full audit trail of all changes
+- Easy rollback (git revert)
+- Automated drift detection
+- Self-healing infrastructure
+- No manual kubectl commands needed
 
 ## Monitoring Dashboards
 
@@ -162,12 +216,12 @@ Production-grade Kubernetes homelab built from scratch for learning DevOps/Platf
 
 ## Next Steps
 
-- [ ] CI/CD pipeline (ArgoCD or Flux)
 - [ ] Advanced alerting with Alertmanager
 - [ ] Terraform for infrastructure provisioning
-- [ ] Additional application monitoring
 - [ ] Log aggregation (Loki)
 - [ ] Advanced networking (NetworkPolicies)
+- [ ] Multi-environment GitOps (dev/staging/prod)
+- [ ] Secrets management (Sealed Secrets / External Secrets)
 
 ## Learning Resources
 
@@ -179,3 +233,4 @@ Every error message was a learning opportunity.
 
 **Status:** Active learning project  
 **Goal:** Build production-ready DevOps skills for job market
+**Current Phase:** 9 of 9 core phases complete
