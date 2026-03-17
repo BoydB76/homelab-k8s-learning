@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-api
+  labels:
+    app: backend
+    tier: api
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      app: backend
+      tier: api
+  template:
+    metadata:
+      labels:
+        app: backend
+        tier: api
+    spec:
+      containers:
+      - name: api
+        image: hashicorp/http-echo:latest
+        args:
+        - -text=$(GREETING_MESSAGE)
+        - -listen=:5678
+        ports:
+        - containerPort: 5678
+        env:
+        - name: GREETING_MESSAGE
+          valueFrom:
+            configMapKeyRef:
+              name: backend-config
+              key: GREETING_MESSAGE
+        - name: GREETING_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: backend-config
+              key: GREETING_NAME
+        - name: API_VERSION
+          valueFrom:
+            configMapKeyRef:
+              name: backend-config
+              key: API_VERSION
+        resources:
+          requests:
+            memory: "32Mi"
+            cpu: "50m"
+          limits:
+            memory: "64Mi"
+            cpu: "100m"
