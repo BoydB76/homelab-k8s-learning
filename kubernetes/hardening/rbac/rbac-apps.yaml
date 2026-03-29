@@ -1,0 +1,47 @@
+---
+# ServiceAccount for frontend workloads
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: frontend-sa
+  namespace: apps
+  labels:
+    app: frontend
+automountServiceAccountToken: false
+---
+# ServiceAccount for backend workloads
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: backend-sa
+  namespace: apps
+  labels:
+    app: backend
+automountServiceAccountToken: false
+---
+# Role: allow backend to read configmaps in apps namespace
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: backend-configmap-reader
+  namespace: apps
+rules:
+- apiGroups: [""]
+  resources: ["configmaps"]
+  resourceNames: ["backend-config"]
+  verbs: ["get", "list", "watch"]
+---
+# RoleBinding: bind backend-sa to configmap reader role
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: backend-configmap-reader-binding
+  namespace: apps
+subjects:
+- kind: ServiceAccount
+  name: backend-sa
+  namespace: apps
+roleRef:
+  kind: Role
+  name: backend-configmap-reader
+  apiGroup: rbac.authorization.k8s.io

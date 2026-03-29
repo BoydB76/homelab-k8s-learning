@@ -1,0 +1,27 @@
+---
+# Namespace: apps - for frontend/backend/nginx workloads
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: apps
+  labels:
+    environment: production
+    managed-by: atlas
+---
+# Namespace: data - for PostgreSQL and stateful services
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: data
+  labels:
+    environment: production
+    managed-by: atlas
+---
+# Namespace: monitoring - for Prometheus, Grafana, exporters
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: monitoring
+  labels:
+    environment: production
+    managed-by: atlas

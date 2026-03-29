@@ -1,0 +1,24 @@
+---
+# Traefik Middleware: redirect HTTP to HTTPS for all routes
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: https-redirect
+  namespace: traefik
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
+---
+# Traefik Middleware: basic auth for dashboard access
+# Generate htpasswd: htpasswd -nb admin your-password | base64
+# Then create a Secret named traefik-dashboard-auth-secret with key 'users'
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: dashboard-auth
+  namespace: traefik
+spec:
+  basicAuth:
+    secret: traefik-dashboard-auth-secret
+    removeHeader: true

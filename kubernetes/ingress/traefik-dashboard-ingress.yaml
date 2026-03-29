@@ -4,8 +4,17 @@ metadata:
   name: traefik-dashboard
   namespace: traefik
   annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: web
+    # Enforce HTTPS; HTTP requests will be redirected via global redirect middleware
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    # Require basic auth middleware (define IngressRoute middleware separately)
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-dashboard-auth@kubernetescrd
 spec:
+  tls:
+  - hosts:
+    - traefik.local
+    # Use cert-manager or supply a wildcard cert via *.local TLS Secret
+    secretName: traefik-dashboard-tls
   rules:
   - host: traefik.local
     http:

@@ -1,0 +1,47 @@
+---
+# ServiceAccount for PostgreSQL
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: postgres-sa
+  namespace: data
+  labels:
+    app: postgres
+automountServiceAccountToken: false
+---
+# ServiceAccount for postgres-exporter (monitoring namespace)
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: postgres-exporter-sa
+  namespace: monitoring
+  labels:
+    app: postgres-exporter
+automountServiceAccountToken: false
+---
+# Role: postgres-exporter can read postgres Secret in data namespace
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: postgres-secret-reader
+  namespace: data
+rules:
+- apiGroups: [""]
+  resources: ["secrets"]
+  resourceNames: ["postgres-credentials"]
+  verbs: ["get"]
+---
+# RoleBinding: allow monitoring/postgres-exporter-sa to read postgres secret
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: postgres-exporter-secret-binding
+  namespace: data
+subjects:
+- kind: ServiceAccount
+  name: postgres-exporter-sa
+  namespace: monitoring
+roleRef:
+  kind: Role
+  name: postgres-secret-reader
+  apiGroup: rbac.authorization.k8s.io
