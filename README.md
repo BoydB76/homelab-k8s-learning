@@ -11,7 +11,7 @@ Production-grade Kubernetes homelab built from scratch for learning DevOps/Platf
 - **Storage:** Local-path provisioner for persistent volumes
 - **Monitoring:** Prometheus + Grafana for observability
 - **GitOps:** ArgoCD + Gitea for automated deployments
-- **IaC:** Ansible for automation
+- **IaC:** Ansible for automation, Terraform for infrastructure provisioning
 
 ## What I've Built
 
@@ -77,6 +77,16 @@ Production-grade Kubernetes homelab built from scratch for learning DevOps/Platf
 - ✅ Audit trail via Git history
 - ✅ Zero-touch deployments (push to Git → auto-deploy)
 
+### Phase 10: Infrastructure as Code with Terraform
+- ✅ Terraform for Proxmox automation
+- ✅ Declarative infrastructure provisioning
+- ✅ LXC container automation
+- ✅ Reusable Terraform modules
+- ✅ Infrastructure versioning in Git
+- ✅ Reproducible environment creation
+- ✅ State management and tracking
+- ✅ Plan before apply workflow
+
 ## Skills Demonstrated
 
 **Kubernetes:**
@@ -93,11 +103,14 @@ Production-grade Kubernetes homelab built from scratch for learning DevOps/Platf
 
 **Infrastructure as Code:**
 - Ansible playbooks for automation
+- Terraform for infrastructure provisioning
 - Git version control for infrastructure
 - Declarative YAML manifests
 - GitOps principles (Git as source of truth)
 - Helm chart deployments
 - Automated drift detection and remediation
+- Reusable modules and abstraction
+- State management
 
 **CI/CD & GitOps:**
 - ArgoCD application deployment
@@ -127,6 +140,7 @@ Production-grade Kubernetes homelab built from scratch for learning DevOps/Platf
 - Capacity planning
 - Troubleshooting and debugging
 - Problem-solving in production-like environments
+- Infrastructure reproducibility
 
 ## Repository Structure
 ```
@@ -141,16 +155,22 @@ Production-grade Kubernetes homelab built from scratch for learning DevOps/Platf
 │   ├── configmaps-secrets/  # Configuration management
 │   ├── persistent-storage/  # StatefulSets and persistent volumes
 │   └── monitoring/      # Prometheus + Grafana stack
-└── gitops-example/
-    └── applications/    # GitOps-managed application manifests
-        ├── frontend/
-        ├── backend/
-        └── nginx/
+├── gitops-example/
+│   └── applications/    # GitOps-managed application manifests
+│       ├── frontend/
+│       ├── backend/
+│       └── nginx/
+└── terraform/
+    ├── modules/
+    │   └── lxc-k3s/     # Reusable k3s LXC container module
+    ├── example-k3s-cluster.tf  # 3-node cluster example
+    └── provider.tf.example     # Provider configuration template
 ```
 
 ## Tech Stack
 
 - **Virtualization:** Proxmox VE, LXC
+- **Infrastructure as Code:** Terraform, Ansible
 - **Container Orchestration:** Kubernetes (k3s)
 - **Configuration Management:** Ansible
 - **Service Mesh:** Traefik
@@ -198,6 +218,23 @@ All applications are now managed via GitOps:
 - Self-healing infrastructure
 - No manual kubectl commands needed
 
+## Terraform Workflow
+
+Infrastructure provisioning automated with Terraform:
+
+1. Define infrastructure in `.tf` files
+2. `terraform plan` - preview changes
+3. `terraform apply` - create/modify infrastructure
+4. State tracked automatically
+5. Reproducible environments
+
+**Example use cases:**
+- Provision LXC containers for k3s nodes
+- Configure networking and storage
+- Scale infrastructure up/down
+- Destroy and recreate environments
+- Version infrastructure in Git
+
 ## Monitoring Dashboards
 
 **Pre-built Kubernetes Dashboards:**
@@ -214,14 +251,23 @@ All applications are now managed via GitOps:
 - Database size and performance
 - Node resource utilization
 
+## Key Learning Moments
+
+**ConfigMap Pod Restart:** Discovered that updating ConfigMaps doesn't automatically restart pods - they continue running with old values until explicitly restarted with `kubectl rollout restart`.
+
+**Terraform Privileged Containers:** Learned that creating privileged LXC containers with features (nesting, keyctl) requires `root@pam` authentication, not API tokens.
+
+**LXC Minimal Installs:** LXC containers don't include SSH server by default - must be installed separately or accessed via Proxmox console.
+
 ## Next Steps
 
 - [ ] Advanced alerting with Alertmanager
-- [ ] Terraform for infrastructure provisioning
-- [ ] Log aggregation (Loki)
+- [ ] Log aggregation (Loki + Promtail)
 - [ ] Advanced networking (NetworkPolicies)
 - [ ] Multi-environment GitOps (dev/staging/prod)
 - [ ] Secrets management (Sealed Secrets / External Secrets)
+- [ ] Backup automation (Velero)
+- [ ] Service mesh (Istio/Linkerd)
 
 ## Learning Resources
 
@@ -232,5 +278,10 @@ Every error message was a learning opportunity.
 ---
 
 **Status:** Active learning project  
-**Goal:** Build production-ready DevOps skills for job market
-**Current Phase:** 9 of 9 core phases complete
+**Goal:** Build production-ready DevOps skills for job market  
+**Current Phase:** 10 of 10 core phases complete ✅
+
+**Journey Timeline:**
+- Weeks 1-2: Foundation (Proxmox, k3s, core concepts)
+- Weeks 3-4: Advanced features (storage, monitoring)
+- Weeks 5-6: Automation (GitOps, Terraform)
